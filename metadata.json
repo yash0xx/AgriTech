@@ -1,0 +1,6 @@
+{
+  "name": "AgriTech",
+  "description": "From Farm to Buyer. Directly, Digitally, Transparently. Premium agricultural marketplace connecting Indian farmers and buyers with live mandi intelligence and logistics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,937 @@
+import {
+  FarmerProfile,
+  BuyerProfile,
+  ProductListing,
+  BuyerRequest,
+  OrderItem,
+  MandiMarketPrice,
+  LogisticsQuote,
+  LogisticsBooking,
+  AppNotification,
+  ReportItem,
+  ProductReview,
+  AdminEscrowLedger
+} from '../types';
+
+export const mockFarmers: FarmerProfile[] = [
+  {
+    id: 'farmer-1',
+    name: 'Rajesh Patil',
+    avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
+    location: 'Nashik',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    phone: '+91 98231 44520',
+    isVerified: true,
+    kycStatus: 'Verified',
+    rating: 4.8,
+    reviewCount: 42,
+    completedOrders: 126,
+    joinedDate: 'Jan 2023',
+    farmSizeAcres: 12.5,
+    primaryCrops: ['Tomatoes', 'Onions', 'Grapes']
+  },
+  {
+    id: 'farmer-2',
+    name: 'Suresh Jadhav',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+    location: 'Baramati',
+    district: 'Pune',
+    state: 'Maharashtra',
+    phone: '+91 94220 89112',
+    isVerified: true,
+    kycStatus: 'Verified',
+    rating: 4.9,
+    reviewCount: 38,
+    completedOrders: 94,
+    joinedDate: 'Mar 2023',
+    farmSizeAcres: 18.0,
+    primaryCrops: ['Wheat', 'Sugarcane', 'Soybean']
+  },
+  {
+    id: 'farmer-3',
+    name: 'Ramesh Shinde',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+    location: 'Rahuri',
+    district: 'Ahmednagar',
+    state: 'Maharashtra',
+    phone: '+91 98901 32456',
+    isVerified: true,
+    kycStatus: 'Verified',
+    rating: 4.7,
+    reviewCount: 29,
+    completedOrders: 68,
+    joinedDate: 'Jul 2023',
+    farmSizeAcres: 9.0,
+    primaryCrops: ['Potatoes', 'Onions', 'Pulses']
+  },
+  {
+    id: 'farmer-4',
+    name: 'Sunita Deshmukh',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
+    location: 'Wai',
+    district: 'Satara',
+    state: 'Maharashtra',
+    phone: '+91 97654 21980',
+    isVerified: true,
+    kycStatus: 'Verified',
+    rating: 4.9,
+    reviewCount: 51,
+    completedOrders: 112,
+    joinedDate: 'Nov 2022',
+    farmSizeAcres: 15.0,
+    primaryCrops: ['Organic Turmeric', 'Ginger', 'Strawberry']
+  }
+];
+
+export const mockBuyers: BuyerProfile[] = [
+  {
+    id: 'buyer-1',
+    name: 'Priya Shah',
+    companyName: 'FreshMart Foods Pvt Ltd',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80',
+    location: 'Vashi, Navi Mumbai',
+    state: 'Maharashtra',
+    phone: '+91 98200 67123',
+    buyerType: 'Wholesaler',
+    isVerified: true,
+    totalPurchasesAmount: 84500,
+    completedOrders: 28,
+    joinedDate: 'Feb 2023'
+  },
+  {
+    id: 'buyer-2',
+    name: 'Amit Verma',
+    companyName: 'GreenBasket Traders',
+    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80',
+    location: 'Market Yard, Pune',
+    state: 'Maharashtra',
+    phone: '+91 98902 44109',
+    buyerType: 'Trader',
+    isVerified: true,
+    totalPurchasesAmount: 142000,
+    completedOrders: 45,
+    joinedDate: 'Dec 2022'
+  }
+];
+
+export const mockProducts: ProductListing[] = [
+  {
+    id: 'prod-1',
+    title: 'Fresh Red Tomatoes (Grade A)',
+    cropName: 'Tomato',
+    category: 'Vegetables',
+    variety: 'Abhinav Hybrid Red',
+    grade: 'Grade A',
+    pricePerUnit: 25,
+    unit: 'kg',
+    marketBenchmarkPrice: 26,
+    quantityAvailable: 500,
+    minOrderQuantity: 50,
+    location: 'Pune',
+    district: 'Pune',
+    state: 'Maharashtra',
+    farmerId: 'farmer-1',
+    farmer: mockFarmers[0],
+    harvestDate: '2026-08-28',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 7,
+    description: 'Farm-fresh, firm and naturally ripened Grade-A tomatoes with high pulp content and natural sheen. Harvested at early morning peak freshness directly from irrigated trellis fields in Pune outskirts. Tested pesticide-compliant and sorted for uniform size and color.',
+    images: [
+      'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 248,
+    requestsCount: 6,
+    featured: true,
+    organicCertified: false,
+    updatedAt: '2 hours ago',
+    createdAt: '2026-08-28'
+  },
+  {
+    id: 'prod-2',
+    title: 'Nashik Red Onions (Premium Export Quality)',
+    cropName: 'Onion',
+    category: 'Vegetables',
+    variety: 'Nashik Garva Lal',
+    grade: 'Grade A',
+    pricePerUnit: 35,
+    unit: 'kg',
+    marketBenchmarkPrice: 38,
+    quantityAvailable: 2500,
+    minOrderQuantity: 200,
+    location: 'Lasalgaon, Nashik',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    farmerId: 'farmer-1',
+    farmer: mockFarmers[0],
+    harvestDate: '2026-08-20',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 45,
+    description: 'Naturally cured, double-skinned Nashik red onions with robust pungent flavor and tight necks. Excellent keeping quality, properly graded 45mm-55mm standard export size. Packed in breathable 50kg mesh bags.',
+    images: [
+      'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1508747703725-719777637510?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 430,
+    requestsCount: 9,
+    featured: true,
+    organicCertified: false,
+    updatedAt: '5 hours ago',
+    createdAt: '2026-08-26'
+  },
+  {
+    id: 'prod-3',
+    title: 'Sharbati Lokwan Wheat (Double Filtered)',
+    cropName: 'Wheat',
+    category: 'Grains',
+    variety: 'Lokwan 148',
+    grade: 'Grade A',
+    pricePerUnit: 32,
+    unit: 'kg',
+    marketBenchmarkPrice: 34,
+    quantityAvailable: 4000,
+    minOrderQuantity: 500,
+    location: 'Baramati, Pune',
+    district: 'Pune',
+    state: 'Maharashtra',
+    farmerId: 'farmer-2',
+    farmer: mockFarmers[1],
+    harvestDate: '2026-08-10',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 180,
+    description: 'Golden, heavy lustrous grains with high gluten and sweetness. Sun-dried to under 10% moisture content and machine cleaned twice to remove chaff and dust. Stored in climate-controlled godowns.',
+    images: [
+      'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 310,
+    requestsCount: 4,
+    featured: false,
+    organicCertified: false,
+    updatedAt: '1 day ago',
+    createdAt: '2026-08-20'
+  },
+  {
+    id: 'prod-4',
+    title: 'Fresh Organic Jyoti Potatoes',
+    cropName: 'Potato',
+    category: 'Vegetables',
+    variety: 'Kufri Jyoti',
+    grade: 'Standard',
+    pricePerUnit: 22,
+    unit: 'kg',
+    marketBenchmarkPrice: 24,
+    quantityAvailable: 1800,
+    minOrderQuantity: 100,
+    location: 'Rahuri, Ahmednagar',
+    district: 'Ahmednagar',
+    state: 'Maharashtra',
+    farmerId: 'farmer-3',
+    farmer: mockFarmers[2],
+    harvestDate: '2026-08-24',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 30,
+    description: 'Freshly dug medium-to-large table potatoes with clean white flesh and smooth skin. Grown in sandy loam soil with minimum synthetic fertilizers. Ideal for retail markets and potato chips processing.',
+    images: [
+      'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 180,
+    requestsCount: 2,
+    featured: false,
+    organicCertified: true,
+    updatedAt: '3 days ago',
+    createdAt: '2026-08-25'
+  },
+  {
+    id: 'prod-5',
+    title: 'Organic Salem Turmeric Rhizomes',
+    cropName: 'Turmeric',
+    category: 'Spices',
+    variety: 'Salem Curcumin Rich',
+    grade: 'Organic',
+    pricePerUnit: 110,
+    unit: 'kg',
+    marketBenchmarkPrice: 118,
+    quantityAvailable: 800,
+    minOrderQuantity: 50,
+    location: 'Wai, Satara',
+    district: 'Satara',
+    state: 'Maharashtra',
+    farmerId: 'farmer-4',
+    farmer: mockFarmers[3],
+    harvestDate: '2026-08-15',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 90,
+    description: 'Certified organic fresh turmeric fingers with exceptionally high 4.8% curcumin content. Vibrant deep orange color, strong aroma and zero chemical polish. Certified by NPOP India.',
+    images: [
+      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 520,
+    requestsCount: 12,
+    featured: true,
+    organicCertified: true,
+    updatedAt: '6 hours ago',
+    createdAt: '2026-08-22'
+  },
+  {
+    id: 'prod-6',
+    title: 'Thompson Seedless Green Table Grapes',
+    cropName: 'Grapes',
+    category: 'Fruits',
+    variety: 'Thompson Seedless Export BRIX 18+',
+    grade: 'Grade A',
+    pricePerUnit: 75,
+    unit: 'kg',
+    marketBenchmarkPrice: 82,
+    quantityAvailable: 1200,
+    minOrderQuantity: 100,
+    location: 'Dindori, Nashik',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    farmerId: 'farmer-1',
+    farmer: mockFarmers[0],
+    harvestDate: '2026-08-27',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 14,
+    description: 'Crisp, sweet bunches with natural bloom. 18+ Brix sweetness index, pre-cooled to 4°C immediately after harvest. Packed in corrugated cartons with protective bubble liners.',
+    images: [
+      'https://images.unsplash.com/photo-1596363505729-4190a9506133?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 390,
+    requestsCount: 8,
+    featured: true,
+    organicCertified: false,
+    updatedAt: '12 hours ago',
+    createdAt: '2026-08-27'
+  },
+  {
+    id: 'prod-7',
+    title: 'Shankar-6 Long Staple Raw Cotton Bales',
+    cropName: 'Cotton',
+    category: 'Cash Crops',
+    variety: 'Shankar-6 29mm',
+    grade: 'Grade A',
+    pricePerUnit: 68,
+    unit: 'kg',
+    marketBenchmarkPrice: 70,
+    quantityAvailable: 3500,
+    minOrderQuantity: 500,
+    location: 'Shevgaon, Ahmednagar',
+    district: 'Ahmednagar',
+    state: 'Maharashtra',
+    farmerId: 'farmer-3',
+    farmer: mockFarmers[2],
+    harvestDate: '2026-08-05',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 365,
+    description: 'Clean, low-trash ginning quality raw cotton with 29mm staple length and high micronaire strength. Moisture content tested below 8%. Packed in standard compressed export bales.',
+    images: [
+      'https://images.unsplash.com/photo-1594897030560-69c1cf6ddc43?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 140,
+    requestsCount: 3,
+    featured: false,
+    organicCertified: false,
+    updatedAt: '4 days ago',
+    createdAt: '2026-08-15'
+  },
+  {
+    id: 'prod-8',
+    title: 'High Protein Yellow Soybean (Seed Quality)',
+    cropName: 'Soybean',
+    category: 'Oilseeds',
+    variety: 'JS 335 Non-GMO',
+    grade: 'Grade A',
+    pricePerUnit: 48,
+    unit: 'kg',
+    marketBenchmarkPrice: 51,
+    quantityAvailable: 2200,
+    minOrderQuantity: 200,
+    location: 'Indapur, Pune',
+    district: 'Pune',
+    state: 'Maharashtra',
+    farmerId: 'farmer-2',
+    farmer: mockFarmers[1],
+    harvestDate: '2026-08-12',
+    availabilityDate: 'Immediate',
+    shelfLifeDays: 180,
+    description: 'Uniform bold yellow seeds with 39% crude protein and 19% oil content. Ideal for oil extraction, soymilk processing, and cattle feed formulations.',
+    images: [
+      'https://images.unsplash.com/photo-1588879460618-9249e7d947d1?w=800&auto=format&fit=crop&q=80'
+    ],
+    status: 'Active',
+    viewsCount: 220,
+    requestsCount: 5,
+    featured: false,
+    organicCertified: false,
+    updatedAt: '2 days ago',
+    createdAt: '2026-08-20'
+  }
+];
+
+export const mockMarketPrices: MandiMarketPrice[] = [
+  {
+    id: 'mp-1',
+    cropName: 'Tomato (Red Grade A)',
+    category: 'Vegetables',
+    mandi: 'Pune APMC Yard',
+    district: 'Pune',
+    state: 'Maharashtra',
+    currentPrice: 26,
+    unit: '₹/kg',
+    previousPrice: 24,
+    changePercentage: 8.3,
+    sevenDayAvg: 24.5,
+    thirtyDayAvg: 22.8,
+    arrivalQuantityQuintals: 1850,
+    source: 'APMC Live Feed',
+    verificationStatus: 'Verified',
+    updatedAt: '15 mins ago',
+    trend: 'up',
+    aiInsight: 'Tomato prices in Pune APMC are up +8.3% due to delayed arrivals from Karnataka border.'
+  },
+  {
+    id: 'mp-2',
+    cropName: 'Onion (Red Garva)',
+    category: 'Vegetables',
+    mandi: 'Lasalgaon Mandi (Asia Largest)',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    currentPrice: 38,
+    unit: '₹/kg',
+    previousPrice: 36,
+    changePercentage: 5.5,
+    sevenDayAvg: 35.2,
+    thirtyDayAvg: 31.0,
+    arrivalQuantityQuintals: 6200,
+    source: 'APMC Live Feed',
+    verificationStatus: 'Verified',
+    updatedAt: '30 mins ago',
+    trend: 'up',
+    aiInsight: 'Strong export orders to Bangladesh and UAE are keeping Lasalgaon prices elevated.'
+  },
+  {
+    id: 'mp-3',
+    cropName: 'Potato (Kufri Jyoti)',
+    category: 'Vegetables',
+    mandi: 'Vashi APMC',
+    district: 'Navi Mumbai',
+    state: 'Maharashtra',
+    currentPrice: 24,
+    unit: '₹/kg',
+    previousPrice: 25,
+    changePercentage: -4.0,
+    sevenDayAvg: 24.8,
+    thirtyDayAvg: 26.2,
+    arrivalQuantityQuintals: 3400,
+    source: 'AgMarkNet',
+    verificationStatus: 'Verified',
+    updatedAt: '1 hour ago',
+    trend: 'down',
+    aiInsight: 'High cold storage releases across UP and MP have increased wholesale supply.'
+  },
+  {
+    id: 'mp-4',
+    cropName: 'Wheat (Lokwan Sharbati)',
+    category: 'Grains',
+    mandi: 'Ahmednagar Mandi',
+    district: 'Ahmednagar',
+    state: 'Maharashtra',
+    currentPrice: 34,
+    unit: '₹/kg',
+    previousPrice: 33.5,
+    changePercentage: 1.5,
+    sevenDayAvg: 33.8,
+    thirtyDayAvg: 32.5,
+    arrivalQuantityQuintals: 2100,
+    source: 'APMC Live Feed',
+    verificationStatus: 'Verified',
+    updatedAt: '2 hours ago',
+    trend: 'up',
+    aiInsight: 'Steady mill demand is keeping premium grain prices stable above ₹33/kg.'
+  },
+  {
+    id: 'mp-5',
+    cropName: 'Grapes (Thompson)',
+    category: 'Fruits',
+    mandi: 'Nashik Fruit Terminal',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    currentPrice: 82,
+    unit: '₹/kg',
+    previousPrice: 85,
+    changePercentage: -3.5,
+    sevenDayAvg: 84.0,
+    thirtyDayAvg: 88.5,
+    arrivalQuantityQuintals: 950,
+    source: 'Mandi Verified Agent',
+    verificationStatus: 'Verified',
+    updatedAt: '3 hours ago',
+    trend: 'down',
+    aiInsight: 'Peak harvesting window starting next week; prices expected to consolidate around ₹75-80/kg.'
+  },
+  {
+    id: 'mp-6',
+    cropName: 'Organic Turmeric (Salem)',
+    category: 'Spices',
+    mandi: 'Sangli Turmeric Exchange',
+    district: 'Sangli',
+    state: 'Maharashtra',
+    currentPrice: 118,
+    unit: '₹/kg',
+    previousPrice: 112,
+    changePercentage: 5.3,
+    sevenDayAvg: 114.0,
+    thirtyDayAvg: 108.0,
+    arrivalQuantityQuintals: 720,
+    source: 'APMC Live Feed',
+    verificationStatus: 'Verified',
+    updatedAt: '4 hours ago',
+    trend: 'up',
+    aiInsight: 'Ayurvedic formulations & export demand are driving continuous high bids in Sangli.'
+  }
+];
+
+export const mockBuyerRequests: BuyerRequest[] = [
+  {
+    id: 'req-1',
+    buyerId: 'buyer-1',
+    buyerName: 'Priya Shah (FreshMart)',
+    buyerType: 'Supermarket Chain',
+    buyerAvatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80',
+    buyerLocation: 'Navi Mumbai',
+    productId: 'prod-1',
+    cropName: 'Fresh Tomatoes (Grade A)',
+    requestedQuantity: 300,
+    unit: 'kg',
+    offeredPrice: 24,
+    totalOfferedValue: 7200,
+    listingPrice: 25,
+    message: 'Need 300kg delivered to Vashi central cold room by Thursday morning. Prompt payment upon QC inspection.',
+    status: 'Pending',
+    requestedDate: '2026-08-30'
+  },
+  {
+    id: 'req-2',
+    buyerId: 'buyer-2',
+    buyerName: 'Amit Verma (GreenBasket)',
+    buyerType: 'Wholesaler Trader',
+    buyerAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80',
+    buyerLocation: 'Pune Market Yard',
+    productId: 'prod-2',
+    cropName: 'Nashik Red Onions',
+    requestedQuantity: 1000,
+    unit: 'kg',
+    offeredPrice: 34,
+    totalOfferedValue: 34000,
+    listingPrice: 35,
+    message: 'Ready to take 1 ton in single lift. Will dispatch own transport from Pune.',
+    status: 'Pending',
+    requestedDate: '2026-08-30'
+  },
+  {
+    id: 'req-3',
+    buyerId: 'buyer-3',
+    buyerName: 'Kisan Agro Processors',
+    buyerType: 'Food Processing Plant',
+    buyerAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+    buyerLocation: 'Satara MIDC',
+    productId: 'prod-4',
+    cropName: 'Organic Jyoti Potatoes',
+    requestedQuantity: 500,
+    unit: 'kg',
+    offeredPrice: 21,
+    totalOfferedValue: 10500,
+    listingPrice: 22,
+    message: 'Looking for weekly regular supply if first batch meets starch moisture threshold.',
+    status: 'Pending',
+    requestedDate: '2026-08-29'
+  }
+];
+
+export const mockOrders: OrderItem[] = [
+  {
+    id: 'ord-101',
+    orderNumber: 'AGR-2026-8891',
+    productId: 'prod-1',
+    cropName: 'Fresh Red Tomatoes (Grade A)',
+    productImage: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&auto=format&fit=crop&q=80',
+    farmerId: 'farmer-1',
+    farmerName: 'Rajesh Patil',
+    farmerLocation: 'Nashik',
+    farmerPhone: '+91 98231 44520',
+    buyerId: 'buyer-1',
+    buyerName: 'Priya Shah (FreshMart)',
+    buyerLocation: 'Navi Mumbai',
+    buyerPhone: '+91 98200 67123',
+    quantity: 200,
+    unit: 'kg',
+    pricePerUnit: 25,
+    totalAmount: 5000,
+    status: 'Shipped',
+    placedDate: '2026-08-30 08:30 AM',
+    expectedDelivery: '2026-08-31 04:00 PM',
+    trackingId: 'TRK-MH-94821',
+    transportVehicle: 'Mini Truck (MH-15-EG-4402)',
+    deliveryAddress: 'FreshMart Warehouse Gate #4, APMC Sector 19, Vashi, Navi Mumbai, MH 400703',
+    escrowStatus: 'Held in Escrow',
+    timeline: [
+      {
+        status: 'Placed',
+        timestamp: 'Aug 30, 08:30 AM',
+        description: 'Order placed & ₹5,000 deposited in AgriTech Escrow.',
+        completed: true
+      },
+      {
+        status: 'Accepted',
+        timestamp: 'Aug 30, 09:15 AM',
+        description: 'Farmer Rajesh Patil accepted harvest batch and confirmed weight.',
+        completed: true
+      },
+      {
+        status: 'Processing',
+        timestamp: 'Aug 30, 01:30 PM',
+        description: 'Quality check completed at farm gate. Crates sanitized & sealed.',
+        completed: true
+      },
+      {
+        status: 'Shipped',
+        timestamp: 'Aug 31, 06:00 AM',
+        description: 'Loaded on Mini Truck (MH-15-EG-4402). Dispatched via NH-60.',
+        completed: true
+      },
+      {
+        status: 'Delivered',
+        timestamp: 'Estimated Aug 31, 04:00 PM',
+        description: 'Doorstep unloading and buyer digital receipt sign-off.',
+        completed: false
+      }
+    ]
+  },
+  {
+    id: 'ord-102',
+    orderNumber: 'AGR-2026-8840',
+    productId: 'prod-2',
+    cropName: 'Nashik Red Onions (Export Quality)',
+    productImage: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=400&auto=format&fit=crop&q=80',
+    farmerId: 'farmer-1',
+    farmerName: 'Rajesh Patil',
+    farmerLocation: 'Nashik',
+    farmerPhone: '+91 98231 44520',
+    buyerId: 'buyer-2',
+    buyerName: 'Amit Verma (GreenBasket)',
+    buyerLocation: 'Pune',
+    buyerPhone: '+91 98902 44109',
+    quantity: 1200,
+    unit: 'kg',
+    pricePerUnit: 35,
+    totalAmount: 42000,
+    status: 'Delivered',
+    placedDate: '2026-08-25 11:00 AM',
+    expectedDelivery: '2026-08-26 06:00 PM',
+    deliveredDate: '2026-08-26 05:45 PM',
+    trackingId: 'TRK-MH-91204',
+    transportVehicle: 'Light Commercial Vehicle (MH-12-PQ-8819)',
+    deliveryAddress: 'Shop #42, Block C, Gultekdi Market Yard, Pune, MH 411037',
+    escrowStatus: 'Released to Farmer',
+    timeline: [
+      {
+        status: 'Placed',
+        timestamp: 'Aug 25, 11:00 AM',
+        description: 'Order confirmed and ₹42,000 held in Escrow.',
+        completed: true
+      },
+      {
+        status: 'Accepted',
+        timestamp: 'Aug 25, 11:40 AM',
+        description: 'Farmer confirmed 1.2 tons packed in 50kg mesh bags.',
+        completed: true
+      },
+      {
+        status: 'Processing',
+        timestamp: 'Aug 25, 03:00 PM',
+        description: 'Weighbridge slip #8812 verified.',
+        completed: true
+      },
+      {
+        status: 'Shipped',
+        timestamp: 'Aug 26, 07:00 AM',
+        description: 'LCV dispatched from Lasalgaon yard.',
+        completed: true
+      },
+      {
+        status: 'Delivered',
+        timestamp: 'Aug 26, 05:45 PM',
+        description: 'Delivery verified by buyer. Escrow funds ₹42,000 credited to Rajesh Patil.',
+        completed: true
+      }
+    ]
+  },
+  {
+    id: 'ord-103',
+    orderNumber: 'AGR-2026-8799',
+    productId: 'prod-3',
+    cropName: 'Sharbati Lokwan Wheat',
+    productImage: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&auto=format&fit=crop&q=80',
+    farmerId: 'farmer-2',
+    farmerName: 'Suresh Jadhav',
+    farmerLocation: 'Baramati, Pune',
+    farmerPhone: '+91 94220 89112',
+    buyerId: 'buyer-1',
+    buyerName: 'Priya Shah (FreshMart)',
+    buyerLocation: 'Navi Mumbai',
+    buyerPhone: '+91 98200 67123',
+    quantity: 1000,
+    unit: 'kg',
+    pricePerUnit: 32,
+    totalAmount: 32000,
+    status: 'Processing',
+    placedDate: '2026-08-29 02:15 PM',
+    expectedDelivery: '2026-09-01 02:00 PM',
+    trackingId: 'TRK-MH-97712',
+    transportVehicle: 'Light Commercial Vehicle (MH-14-BT-3091)',
+    deliveryAddress: 'FreshMart Central Godown, Navi Mumbai, MH',
+    escrowStatus: 'Held in Escrow',
+    timeline: [
+      {
+        status: 'Placed',
+        timestamp: 'Aug 29, 02:15 PM',
+        description: 'Order confirmed and ₹32,000 deposited in Escrow.',
+        completed: true
+      },
+      {
+        status: 'Accepted',
+        timestamp: 'Aug 29, 03:30 PM',
+        description: 'Farmer Suresh Jadhav scheduled pallet packaging.',
+        completed: true
+      },
+      {
+        status: 'Processing',
+        timestamp: 'Aug 30, 10:00 AM',
+        description: 'Bagging & moisture testing in progress.',
+        completed: true
+      },
+      {
+        status: 'Shipped',
+        timestamp: 'Scheduled Aug 31, 09:00 AM',
+        description: 'Scheduled for dispatch via Pune-Mumbai Expressway.',
+        completed: false
+      },
+      {
+        status: 'Delivered',
+        timestamp: 'Estimated Sep 01, 02:00 PM',
+        description: 'Final delivery verification.',
+        completed: false
+      }
+    ]
+  }
+];
+
+export const mockLogisticsQuotes: LogisticsQuote[] = [
+  {
+    id: 'log-1',
+    vehicleType: 'Mini Truck (1-2 Tons)',
+    capacityDescription: 'Tata Ace / Mahindra Bolero Maxx (1,500 kg max payload)',
+    baseFare: 850,
+    perKmRate: 22,
+    estimatedCost: 1850,
+    estimatedHours: 4.5,
+    distanceKm: 145,
+    pickupLocation: 'Nashik, Maharashtra',
+    deliveryLocation: 'Pune, Maharashtra',
+    suitableFor: ['Fresh Tomatoes', 'Vegetable Crates', 'Fruit Cartons', 'Perishables']
+  },
+  {
+    id: 'log-2',
+    vehicleType: 'Light Commercial Vehicle (2-4 Tons)',
+    capacityDescription: 'Eicher Pro / Tata 407 (3,500 kg max payload)',
+    baseFare: 1400,
+    perKmRate: 28,
+    estimatedCost: 3200,
+    estimatedHours: 5.0,
+    distanceKm: 145,
+    pickupLocation: 'Nashik, Maharashtra',
+    deliveryLocation: 'Pune, Maharashtra',
+    suitableFor: ['Onion Bags (50kg)', 'Wheat/Grain Sacks', 'Potatoes', 'Bulk Produce']
+  },
+  {
+    id: 'log-3',
+    vehicleType: 'Heavy Multi-Axle (5-10 Tons)',
+    capacityDescription: 'Tata 1109 / Ashok Leyland Ecomet (9,000 kg max payload)',
+    baseFare: 2600,
+    perKmRate: 36,
+    estimatedCost: 6800,
+    estimatedHours: 6.5,
+    distanceKm: 145,
+    pickupLocation: 'Nashik, Maharashtra',
+    deliveryLocation: 'Pune, Maharashtra',
+    suitableFor: ['Wholesale Mandi Loads', 'Sugarcane / Cotton Bales', 'Processed Grains']
+  },
+  {
+    id: 'log-4',
+    vehicleType: 'Cold Storage Container',
+    capacityDescription: 'Refrigerated Carrier 2-4°C (2,500 kg payload)',
+    baseFare: 2200,
+    perKmRate: 38,
+    estimatedCost: 5400,
+    estimatedHours: 4.5,
+    distanceKm: 145,
+    pickupLocation: 'Nashik, Maharashtra',
+    deliveryLocation: 'Mumbai, Maharashtra',
+    suitableFor: ['Export Grapes', 'Strawberries', 'Exotic Vegetables', 'Dairy']
+  }
+];
+
+export const mockNotifications: AppNotification[] = [
+  {
+    id: 'notif-1',
+    category: 'AI Insights',
+    title: 'Price Surge Alert: Tomatoes',
+    message: 'Tomato demand is currently increasing around Pune (+8.4% this week). Consider listing available stock soon for premium pricing.',
+    timestamp: '10 mins ago',
+    isRead: false,
+    linkAction: 'market-prices'
+  },
+  {
+    id: 'notif-2',
+    category: 'Orders',
+    title: 'New Offer Received',
+    message: 'Priya Shah (FreshMart) sent a purchase request for 300 kg Fresh Tomatoes at ₹24/kg.',
+    timestamp: '45 mins ago',
+    isRead: false,
+    linkAction: 'buyer-requests'
+  },
+  {
+    id: 'notif-3',
+    category: 'Logistics',
+    title: 'Vehicle Dispatched',
+    message: 'Mini Truck MH-15-EG-4402 has departed from farm gate for Order #AGR-2026-8891.',
+    timestamp: '2 hours ago',
+    isRead: true,
+    linkAction: 'logistics'
+  },
+  {
+    id: 'notif-4',
+    category: 'Market',
+    title: 'Lasalgaon Mandi Onion Benchmark',
+    message: 'Onion prices reached ₹38/kg today at Lasalgaon APMC (+5.5%).',
+    timestamp: '5 hours ago',
+    isRead: true,
+    linkAction: 'market-prices'
+  },
+  {
+    id: 'notif-5',
+    category: 'System',
+    title: 'KYC Document Verified',
+    message: 'Your 7/12 land record and Aadhaar identity verification have been approved.',
+    timestamp: '1 day ago',
+    isRead: true,
+    linkAction: 'profile'
+  }
+];
+
+export const mockAdminReports: ReportItem[] = [
+  {
+    id: 'rep-1',
+    category: 'Incorrect Listing',
+    reporterName: 'Kisan Co-op Vigilance',
+    reporterRole: 'Buyer',
+    reportedEntityName: 'Tractor Rental Bulk (Suspicious)',
+    entityType: 'Product',
+    details: 'Listing claims to offer imported high-capacity harvesters but uses non-agricultural contact number.',
+    status: 'New',
+    createdAt: '2026-08-30 09:20 AM',
+    priority: 'High'
+  },
+  {
+    id: 'rep-2',
+    category: 'Pricing Complaint',
+    reporterName: 'Amit Verma',
+    reporterRole: 'Buyer',
+    reportedEntityName: 'Shankar-6 Cotton Bales',
+    entityType: 'Product',
+    details: 'Seller listed at ₹68/kg but quoted ₹78/kg upon initial phone contact.',
+    status: 'Investigating',
+    createdAt: '2026-08-29 03:45 PM',
+    priority: 'Medium'
+  },
+  {
+    id: 'rep-3',
+    category: 'Delivery Issue',
+    reporterName: 'Rajesh Patil',
+    reporterRole: 'Farmer',
+    reportedEntityName: 'Logistics Transporter #L-44',
+    entityType: 'Delivery',
+    details: 'Driver arrived 4 hours late past harvest cooling cutoff window.',
+    status: 'Resolved',
+    createdAt: '2026-08-28 11:10 AM',
+    priority: 'Low'
+  }
+];
+
+export const mockReviews: ProductReview[] = [
+  {
+    id: 'rev-1',
+    buyerName: 'Priya Shah',
+    buyerCompany: 'FreshMart Foods',
+    rating: 5,
+    comment: 'Exceptional tomato quality! All 500kg was delivered within 6 hours of early morning harvest. Zero transit damage.',
+    date: 'Aug 26, 2026',
+    verifiedPurchase: true
+  },
+  {
+    id: 'rev-2',
+    buyerName: 'Mahesh Gokhale',
+    buyerCompany: 'Gokhale Veg Wholesale',
+    rating: 4.8,
+    comment: 'Uniform grading and accurately described. Rajesh Patil is one of the most reliable farmers in Nashik belt.',
+    date: 'Aug 18, 2026',
+    verifiedPurchase: true
+  }
+];
+
+export const mockEscrowLedger: AdminEscrowLedger[] = [
+  {
+    id: 'esc-1',
+    orderId: 'ORD-2026-8891',
+    amount: 12500,
+    farmerName: 'Rajesh Patil',
+    buyerName: 'Priya Shah (FreshMart)',
+    status: 'Held in Escrow',
+    createdAt: '2026-08-31',
+    disputeFlag: false
+  },
+  {
+    id: 'esc-2',
+    orderId: 'ORD-2026-7420',
+    amount: 25000,
+    farmerName: 'Dattatray Shinde',
+    buyerName: 'Suresh Agarwal',
+    status: 'Held in Escrow',
+    createdAt: '2026-08-30',
+    disputeFlag: false
+  },
+  {
+    id: 'esc-3',
+    orderId: 'ORD-2026-6104',
+    amount: 32000,
+    farmerName: 'Vikram Jadhav',
+    buyerName: 'Gokhale Veg Wholesale',
+    status: 'Released to Farmer',
+    createdAt: '2026-08-28',
+    disputeFlag: false
+  }
+];
+

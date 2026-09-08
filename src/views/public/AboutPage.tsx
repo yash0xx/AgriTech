@@ -1,12 +1,12 @@
 import React from 'react';
 import { Logo } from '../../components/brand/Logo';
-import { 
-  Sprout, 
-  MapPin, 
-  Users, 
-  Award, 
-  TrendingUp, 
-  ShieldCheck, 
+import {
+  Sprout,
+  MapPin,
+  Users,
+  Award,
+  TrendingUp,
+  ShieldCheck,
   ArrowRight,
   Sparkles,
   Building2
@@ -14,12 +14,10 @@ import {
 
 interface AboutPageProps {
   onNavigate: (view: string) => void;
-  onOpenAuthModal: () => void;
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({
   onNavigate,
-  onOpenAuthModal,
 }) => {
   return (
     <div className="min-h-screen bg-[#F7F5EF] pb-20">
@@ -40,7 +38,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 space-y-12">
-        
+
         {/* Core Narrative */}
         <div className="bg-white p-6 sm:p-10 rounded-3xl border border-[#E7DDC8] shadow-sm space-y-6">
           <div className="flex items-center gap-3 pb-4 border-b border-[#E7DDC8]">

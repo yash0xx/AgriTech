@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { ProductListing, MandiMarketPrice, UserRole } from '../../types';
 import { AIInsightCard } from '../../components/common/AIInsightCard';
-import { 
-  Sprout, 
-  ShoppingBag, 
-  ArrowRight, 
-  ShieldCheck, 
-  TrendingUp, 
-  Truck, 
-  CheckCircle2, 
-  MapPin, 
-  Star, 
-  Sparkles, 
-  Search, 
+import {
+  Sprout,
+  ShoppingBag,
+  ArrowRight,
+  ShieldCheck,
+  TrendingUp,
+  Truck,
+  CheckCircle2,
+  MapPin,
+  Star,
+  Sparkles,
+  Search,
   ChevronRight,
   BadgeCheck,
   Scale,
@@ -26,14 +26,12 @@ interface LandingPageProps {
   products: ProductListing[];
   marketPrices: MandiMarketPrice[];
   onNavigate: (view: string, extra?: any) => void;
-  onOpenAuthModal: (role?: UserRole, tab?: 'login' | 'register') => void;
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({
   products,
   marketPrices,
   onNavigate,
-  onOpenAuthModal,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -61,10 +59,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <section className="relative overflow-hidden pt-8 pb-16 md:pt-16 md:pb-24 bg-gradient-to-b from-[#F7F5EF] via-[#F2FCF3] to-[#F7F5EF] border-b border-[#E7DDC8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+
             {/* Left Hero Column */}
             <div className="lg:col-span-7 space-y-6">
-              
+
               {/* Trust Badge */}
               <div className="inline-flex items-center gap-2 bg-[#E6F0E8] border border-[#9DF1C0] px-3.5 py-1.5 rounded-full shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-[#0D6C45] animate-ping" />
@@ -111,16 +109,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
-                  onClick={() => onOpenAuthModal('farmer', 'register')}
-                  className="bg-[#0D6C45] hover:bg-[#084D31] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-sm"
+                  onClick={() => onNavigate('/register?role=FARMER')}
+                  className="bg-[#0D6C45] hover:bg-[#084D31] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-sm cursor-pointer"
                 >
                   <Sprout className="w-4 h-4 text-[#9DF1C0]" />
                   <span>I am a Farmer (Sell Produce)</span>
                 </button>
 
                 <button
-                  onClick={() => onOpenAuthModal('buyer', 'register')}
-                  className="bg-white hover:bg-[#E6F0E8] border border-[#C1C8C2] text-[#002517] font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-xs"
+                  onClick={() => onNavigate('/register?role=BUYER')}
+                  className="bg-white hover:bg-[#E6F0E8] border border-[#C1C8C2] text-[#002517] font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-xs cursor-pointer"
                 >
                   <ShoppingBag className="w-4 h-4 text-[#C2962A]" />
                   <span>I am a Buyer (Wholesale)</span>
@@ -166,7 +164,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 {/* Price Highlights */}
                 <div className="space-y-3">
                   {marketPrices.slice(0, 3).map((mp) => (
-                    <div 
+                    <div
                       key={mp.id}
                       onClick={() => onNavigate('market-prices')}
                       className="flex items-center justify-between p-3 rounded-2xl bg-[#F7F5EF] hover:bg-[#E6F0E8] transition-colors cursor-pointer border border-[#E7DDC8]"
@@ -195,7 +193,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
                 <div className="mt-4 pt-3 border-t border-[#E7DDC8] flex items-center justify-between text-xs">
                   <span className="text-[#717973] text-[11px]">Updated 15m ago from Nashik & Pune</span>
-                  <button 
+                  <button
                     onClick={() => onNavigate('market-prices')}
                     className="text-[#0D6C45] font-bold hover:underline flex items-center gap-1"
                   >
@@ -355,7 +353,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                       </div>
                     </div>
 
-                    <button 
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate('product-details', { product });
@@ -388,7 +386,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            
+
             {/* Step 1 */}
             <div className="bg-[#F7F5EF] p-6 rounded-3xl border border-[#E7DDC8] space-y-3 relative">
               <div className="w-10 h-10 rounded-2xl bg-[#002517] text-[#9DF1C0] flex items-center justify-center font-black text-sm">
@@ -440,7 +438,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <section className="py-16 bg-gradient-to-b from-[#F2FCF3] to-[#F7F5EF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#002517] text-white rounded-3xl p-8 sm:p-12 overflow-hidden relative shadow-2xl">
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               <div className="lg:col-span-7 space-y-4">
                 <div className="inline-flex items-center gap-2 bg-[#9DF1C0]/20 border border-[#9DF1C0]/30 px-3 py-1 rounded-full text-xs font-bold text-[#9DF1C0]">
@@ -517,16 +515,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button
-              onClick={() => onOpenAuthModal('farmer', 'register')}
-              className="bg-[#002517] hover:bg-[#123B2A] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all shadow-md active:scale-98 flex items-center gap-2"
+              onClick={() => onNavigate('/register?role=FARMER')}
+              className="bg-[#002517] hover:bg-[#123B2A] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all shadow-md active:scale-98 flex items-center gap-2 cursor-pointer"
             >
               <Sprout className="w-4 h-4 text-[#9DF1C0]" />
               <span>Register as Farmer</span>
             </button>
 
             <button
-              onClick={() => onOpenAuthModal('buyer', 'register')}
-              className="bg-[#E6F0E8] hover:bg-[#D7E4DA] text-[#002517] font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all flex items-center gap-2"
+              onClick={() => onNavigate('/register?role=BUYER')}
+              className="bg-[#E6F0E8] hover:bg-[#D7E4DA] text-[#002517] font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all flex items-center gap-2 cursor-pointer"
             >
               <ShoppingBag className="w-4 h-4 text-[#0D6C45]" />
               <span>Register as Buyer</span>

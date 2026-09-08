@@ -1,13 +1,13 @@
 import React from 'react';
 import { UserRole } from '../../types';
-import { 
-  Sprout, 
-  ShoppingBag, 
-  ShieldCheck, 
-  CheckCircle2, 
-  Truck, 
-  Scale, 
-  CreditCard, 
+import {
+  Sprout,
+  ShoppingBag,
+  ShieldCheck,
+  CheckCircle2,
+  Truck,
+  Scale,
+  CreditCard,
   ArrowRight,
   FileCheck,
   Building2,
@@ -17,16 +17,14 @@ import {
 
 interface HowItWorksPageProps {
   onNavigate: (view: string) => void;
-  onOpenAuthModal: (role?: UserRole) => void;
 }
 
 export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
   onNavigate,
-  onOpenAuthModal,
 }) => {
   return (
     <div className="min-h-screen bg-[#F7F5EF] pb-20">
-      
+
       {/* Header Banner */}
       <div className="bg-[#002517] text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-[#123B2A]">
         <div className="max-w-4xl mx-auto text-center space-y-3">
@@ -43,10 +41,10 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 space-y-12">
-        
+
         {/* Farmer Journey vs Buyer Journey Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
+
           {/* FARMER JOURNEY */}
           <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E7DDC8] shadow-sm space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-[#E7DDC8]">
@@ -94,8 +92,8 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
             </div>
 
             <button
-              onClick={() => onOpenAuthModal('farmer', 'register')}
-              className="w-full bg-[#002517] text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2"
+              onClick={() => onNavigate('/register?role=FARMER')}
+              className="w-full bg-[#002517] text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer hover:bg-[#003823] transition-colors"
             >
               <span>Register as Farmer</span>
               <ArrowRight className="w-4 h-4 text-[#9DF1C0]" />
@@ -149,8 +147,8 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
             </div>
 
             <button
-              onClick={() => onOpenAuthModal('buyer', 'register')}
-              className="w-full bg-[#E6F0E8] text-[#002517] font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 hover:bg-[#D7E4DA]"
+              onClick={() => onNavigate('/register?role=BUYER')}
+              className="w-full bg-[#E6F0E8] text-[#002517] font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 hover:bg-[#D7E4DA] cursor-pointer transition-colors"
             >
               <span>Register as Buyer</span>
               <ArrowRight className="w-4 h-4 text-[#0D6C45]" />

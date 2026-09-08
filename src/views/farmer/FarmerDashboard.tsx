@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { ProductListing, BuyerRequest, OrderItem, MandiMarketPrice, UserRole } from '../../types';
 import { AIInsightCard } from '../../components/common/AIInsightCard';
-import { 
-  Sprout, 
-  PlusCircle, 
-  ShoppingBag, 
-  TrendingUp, 
-  Truck, 
-  Clock, 
-  CheckCircle2, 
-  XCircle, 
-  Scale, 
-  ArrowRight, 
-  ArrowUpRight, 
-  DollarSign, 
-  Package, 
-  Eye, 
-  BadgeCheck, 
+import { useAuth } from '../../auth/useAuth';
+import {
+  Sprout,
+  PlusCircle,
+  ShoppingBag,
+  TrendingUp,
+  Truck,
+  Clock,
+  CheckCircle2,
+  XCircle,
+  Scale,
+  ArrowRight,
+  ArrowUpRight,
+  DollarSign,
+  Package,
+  Eye,
+  BadgeCheck,
   MessageSquare,
   AlertCircle,
   Calendar
@@ -43,7 +44,9 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
   onDeclineRequest,
   onCounterOfferRequest,
 }) => {
-  const farmerProducts = products.filter(p => p.farmerId === 'farmer-1');
+  const { user, profile } = useAuth();
+  const currentFarmerId = user?.id;
+  const farmerProducts = products.filter(p => p.farmerId === currentFarmerId);
   const activeProducts = products.filter(p => p.status === 'Active');
   const pendingRequests = buyerRequests.filter(r => r.status === 'Pending');
 
@@ -59,14 +62,16 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <img
-                src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80"
-                alt="Rajesh Patil"
+                src={profile?.avatarUrl || "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80"}
+                alt={profile?.fullName || "Farmer"}
                 referrerPolicy="no-referrer"
                 className="w-14 h-14 rounded-2xl object-cover border-2 border-[#9DF1C0]"
               />
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl sm:text-2xl font-black text-white">Good morning, Rajesh Patil</h1>
+                  <h1 className="text-xl sm:text-2xl font-black text-white">
+                    Good morning, {profile?.fullName || 'Ramesh Patil'}
+                  </h1>
                   <span className="flex items-center gap-1 bg-[#E6F0E8] text-[#002517] text-[10px] font-bold px-2.5 py-0.5 rounded-full">
                     <BadgeCheck className="w-3.5 h-3.5 text-[#0D6C45]" />
                     <span>KYC Verified Farmer</span>
@@ -100,7 +105,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
-        
+
         {/* Contextual AI Insight Banner */}
         <AIInsightCard
           variant="banner"
@@ -144,7 +149,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
             <div className="text-2xl sm:text-3xl font-black text-[#0D6C45]">
               {pendingRequests.length}
             </div>
-            <button 
+            <button
               onClick={() => onNavigate('farmer-buyer-requests')}
               className="text-[11px] font-bold text-[#0D6C45] hover:underline block"
             >
@@ -167,7 +172,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
         {/* 2-Column Split: Buyer Requests & Active Listings */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* LEFT: PENDING BUYER OFFERS / REQUESTS */}
           <div className="lg:col-span-7 space-y-4">
             <div className="bg-white rounded-3xl border border-[#E7DDC8] shadow-xs overflow-hidden">
@@ -263,7 +268,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
           {/* RIGHT: ACTIVE LISTINGS & MANDI RATES */}
           <div className="lg:col-span-5 space-y-6">
-            
+
             {/* Active Listings Mini Table */}
             <div className="bg-white rounded-3xl border border-[#E7DDC8] shadow-xs overflow-hidden">
               <div className="p-5 border-b border-[#E7DDC8] flex items-center justify-between">

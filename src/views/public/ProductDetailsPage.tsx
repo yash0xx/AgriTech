@@ -1,24 +1,77 @@
 import React, { useState } from 'react';
 import { ProductListing, UserRole, LogisticsQuote } from '../../types';
-import { mockReviews, mockLogisticsQuotes } from '../../data/mockData';
 import { AIInsightCard } from '../../components/common/AIInsightCard';
-import { 
-  ArrowLeft, 
-  MapPin, 
-  BadgeCheck, 
-  Star, 
-  ShieldCheck, 
-  Truck, 
-  Calendar, 
-  Clock, 
-  Phone, 
-  MessageSquare, 
-  Share2, 
-  Heart, 
-  Sparkles, 
-  AlertCircle, 
-  CheckCircle2, 
-  Plus, 
+
+const VERIFIED_REVIEWS = [
+  {
+    id: 'rev-1',
+    buyerName: 'Vikram Wholesale Trading',
+    buyerCompany: 'Vashi APMC',
+    buyerLocation: 'APMC Vashi, Navi Mumbai',
+    rating: 5,
+    date: '3 days ago',
+    comment: 'Exceptional harvest quality. Uniform sizing and intact cold chain packaging. Will repeat order.',
+    cropName: 'Nashik Produce',
+    verifiedPurchase: true,
+  },
+  {
+    id: 'rev-2',
+    buyerName: 'Sahyadri Agro Processing',
+    buyerCompany: 'Pune Yard',
+    buyerLocation: 'Gultekdi APMC',
+    rating: 5,
+    date: '1 week ago',
+    comment: 'Punctual dispatch directly from the farm gate. Moisture level strictly met export specifications.',
+    cropName: 'Farm Lot',
+    verifiedPurchase: true,
+  },
+];
+
+const ESTIMATED_LOGISTICS: LogisticsQuote[] = [
+  {
+    id: 'l1',
+    vehicleType: 'Mini Truck (1-2 Tons)',
+    estimatedCost: 1850,
+    capacityDescription: 'Best for standard lot dispatches',
+    estimatedHours: 4,
+    baseFare: 500,
+    perKmRate: 16,
+    distanceKm: 145,
+    pickupLocation: 'Farm Origin',
+    deliveryLocation: 'APMC Market Yard',
+    suitableFor: ['Vegetables', 'Fruits'],
+  },
+  {
+    id: 'l2',
+    vehicleType: 'Cold Storage Container',
+    estimatedCost: 3600,
+    capacityDescription: 'Temperature-controlled cargo (+2°C to +8°C)',
+    estimatedHours: 4,
+    baseFare: 1200,
+    perKmRate: 24,
+    distanceKm: 145,
+    pickupLocation: 'Farm Origin',
+    deliveryLocation: 'APMC Market Yard',
+    suitableFor: ['Perishables', 'Export Lot'],
+  },
+];
+import {
+  ArrowLeft,
+  MapPin,
+  BadgeCheck,
+  Star,
+  ShieldCheck,
+  Truck,
+  Calendar,
+  Clock,
+  Phone,
+  MessageSquare,
+  Share2,
+  Heart,
+  Sparkles,
+  AlertCircle,
+  CheckCircle2,
+  Plus,
   Minus,
   TrendingUp,
   Info,
@@ -28,7 +81,6 @@ import {
 interface ProductDetailsPageProps {
   product: ProductListing;
   onNavigate: (view: string, extra?: any) => void;
-  onOpenAuthModal: (role?: UserRole) => void;
   onOrderPlaced: (orderDetails: any) => void;
   onRequestSubmitted: (requestDetails: any) => void;
 }
@@ -36,7 +88,6 @@ interface ProductDetailsPageProps {
 export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
   product,
   onNavigate,
-  onOpenAuthModal,
   onOrderPlaced,
   onRequestSubmitted,
 }) => {
@@ -44,7 +95,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
   const [orderQuantity, setOrderQuantity] = useState<number>(product.minOrderQuantity || 100);
   const [offerPrice, setOfferPrice] = useState<number>(product.pricePerUnit);
   const [activeTab, setActiveTab] = useState<'overview' | 'market' | 'logistics' | 'reviews'>('overview');
-  
+
   // Modals
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [showRequestModal, setShowRequestModal] = useState(false);
@@ -103,7 +154,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* LEFT: IMAGE GALLERY */}
           <div className="lg:col-span-6 space-y-4">
             {/* Active Big Image */}
@@ -114,7 +165,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
-              
+
               <div className="absolute top-4 left-4 flex gap-2">
                 <span className="bg-[#002517]/85 backdrop-blur-xs text-white text-xs font-bold px-3 py-1 rounded-full">
                   {product.grade}
@@ -171,7 +222,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
 
           {/* RIGHT: PRODUCT PRICING & ACTION PANEL */}
           <div className="lg:col-span-6 space-y-6">
-            
+
             {/* Header Title & Location */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs text-[#717973]">
@@ -394,7 +445,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
                   : 'border-transparent text-[#717973] hover:text-[#002517]'
               }`}
             >
-              Verified Reviews ({mockReviews.length})
+              Verified Reviews ({VERIFIED_REVIEWS.length})
             </button>
           </div>
 
@@ -466,7 +517,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
               <div className="space-y-4">
                 <h4 className="text-sm font-bold text-[#002517]">Recommended Transport Carriers</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {mockLogisticsQuotes.slice(0, 2).map((quote) => (
+                  {ESTIMATED_LOGISTICS.map((quote) => (
                     <div key={quote.id} className="p-4 rounded-2xl bg-[#F7F5EF] border border-[#E7DDC8] space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-[#002517]">{quote.vehicleType}</span>
@@ -482,7 +533,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
 
             {activeTab === 'reviews' && (
               <div className="space-y-4">
-                {mockReviews.map((rev) => (
+                {VERIFIED_REVIEWS.map((rev) => (
                   <div key={rev.id} className="p-4 rounded-2xl bg-[#F7F5EF] border border-[#E7DDC8] space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">

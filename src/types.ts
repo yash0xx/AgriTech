@@ -1,6 +1,37 @@
-export type UserRole = 'public' | 'farmer' | 'buyer' | 'admin';
+export type PlatformRole = 'FARMER' | 'SELLER' | 'BUYER' | 'ADMIN';
+export type ProfileStatus = 'ACTIVE' | 'SUSPENDED' | 'PENDING';
+export type TeamRole = 'TEAM_LEAD' | 'BACKEND' | 'FRONTEND' | 'DATABASE' | 'AI_ML' | 'QA';
 
-export type CropCategory = 
+// Supports platform role strings and backwards-compatible lowercase
+export type UserRole = 'FARMER' | 'SELLER' | 'BUYER' | 'ADMIN' | 'farmer' | 'seller' | 'buyer' | 'admin' | 'public';
+
+export interface Profile {
+  id: string;
+  fullName: string;
+  email?: string;
+  phone?: string | null;
+  role: PlatformRole;
+  status: ProfileStatus;
+  avatarUrl?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface TeamMember {
+  id: string;
+  userId: string;
+  displayName?: string;
+  teamRole: TeamRole;
+  isActive?: boolean;
+  email?: string;
+  assignedBy?: string | null;
+  assignedAt: string;
+  fullName?: string;
+  phone?: string | null;
+  accountStatus?: ProfileStatus;
+}
+
+export type CropCategory =
   | 'Vegetables'
   | 'Fruits'
   | 'Grains'
@@ -10,7 +41,7 @@ export type CropCategory =
   | 'Cash Crops';
 
 export type CropUnit = 'kg' | 'quintal' | 'ton' | 'crate' | 'bag';
-
+export type QualityGrade = 'Grade A' | 'Grade B' | 'Standard' | 'Organic';
 export type ProductStatus = 'Active' | 'Draft' | 'Paused' | 'Sold Out';
 
 export interface FarmerProfile {
@@ -46,6 +77,25 @@ export interface BuyerProfile {
   joinedDate: string;
 }
 
+export interface SellerProfile {
+  id: string;
+  name: string;
+  businessName?: string;
+  businessType?: string;
+  gstNumber?: string;
+  avatar?: string;
+  location?: string;
+  district?: string;
+  state?: string;
+  pincode?: string;
+  phone?: string;
+  isVerified?: boolean;
+  kycStatus?: 'Verified' | 'Pending' | 'Rejected';
+  rating?: number;
+  completedOrders?: number;
+  joinedDate?: string;
+}
+
 export interface ProductListing {
   id: string;
   title: string;
@@ -77,6 +127,8 @@ export interface ProductListing {
   createdAt: string;
 }
 
+export type RequestStatus = 'Pending' | 'Accepted' | 'Declined' | 'Counter Offered';
+
 export interface BuyerRequest {
   id: string;
   buyerId: string;
@@ -87,20 +139,21 @@ export interface BuyerRequest {
   buyerLocation: string;
   productId: string;
   cropName: string;
+  farmerId?: string;
   requestedQuantity: number;
   unit: CropUnit;
   offeredPrice: number;
   totalOfferedValue: number;
   listingPrice?: number;
   message?: string;
-  status: 'Pending' | 'Accepted' | 'Declined' | 'Counter Offered';
+  status: RequestStatus;
   counterPrice?: number;
   counterNote?: string;
   requestedDate?: string;
   createdAt?: string;
 }
 
-export type OrderStatus = 
+export type OrderStatus =
   | 'Placed'
   | 'Confirmed'
   | 'Accepted'

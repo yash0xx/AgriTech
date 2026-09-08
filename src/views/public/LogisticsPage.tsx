@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import { LogisticsQuote, LogisticsBooking } from '../../types';
-import { mockLogisticsQuotes } from '../../data/mockData';
-import { 
-  Truck, 
-  MapPin, 
-  Calendar, 
-  Clock, 
-  ShieldCheck, 
-  ArrowRight, 
-  Sparkles, 
-  CheckCircle2, 
-  Scale, 
+import {
+  Truck,
+  MapPin,
+  Calendar,
+  Clock,
+  ShieldCheck,
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  Scale,
   HelpCircle,
   Phone,
   Layers,
   ChevronRight
 } from 'lucide-react';
+
+const FLEET_VEHICLE_OPTIONS = [
+  { id: 'v1', vehicleType: 'Mini Truck (1-2 Tons)', estimatedCost: 1850, capacityDescription: 'Up to 2,000 kg • Best for daily vegetable crates' },
+  { id: 'v2', vehicleType: 'Light Commercial Vehicle (3-5 Tons)', estimatedCost: 3200, capacityDescription: 'Up to 5,000 kg • Heavy grain sacks & root crops' },
+  { id: 'v3', vehicleType: 'Cold-Chain Reefer (2-4 Tons)', estimatedCost: 4500, capacityDescription: 'Temperature controlled (+2°C to +8°C) • Grapes & Berries' },
+  { id: 'v4', vehicleType: 'Heavy Truck (10+ Tons)', estimatedCost: 7800, capacityDescription: 'Interstate bulk haulage • Multi-mandi dispatches' },
+];
 
 interface LogisticsPageProps {
   onNavigate: (view: string) => void;
@@ -55,7 +60,7 @@ export const LogisticsPage: React.FC<LogisticsPageProps> = ({
 
   return (
     <div className="min-h-screen bg-[#F7F5EF] pb-20">
-      
+
       {/* Header Banner */}
       <div className="bg-[#002517] text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-[#123B2A]">
         <div className="max-w-7xl mx-auto">
@@ -83,10 +88,10 @@ export const LogisticsPage: React.FC<LogisticsPageProps> = ({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
-        
+
         {/* Instant Freight Calculator & Booking Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Left Calculator Form */}
           <div className="lg:col-span-6 bg-white p-6 sm:p-8 rounded-3xl border border-[#E7DDC8] shadow-sm space-y-5">
             <div>
@@ -173,7 +178,7 @@ export const LogisticsPage: React.FC<LogisticsPageProps> = ({
                 <div>
                   <label className="block text-xs font-bold text-[#002517] mb-2">Select Vehicle Type</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {mockLogisticsQuotes.map((q) => (
+                    {FLEET_VEHICLE_OPTIONS.map((q) => (
                       <div
                         key={q.id}
                         onClick={() => setSelectedVehicle(q.vehicleType)}
@@ -211,7 +216,7 @@ export const LogisticsPage: React.FC<LogisticsPageProps> = ({
           <div className="lg:col-span-6 space-y-4">
             <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E7DDC8] shadow-sm space-y-4">
               <h3 className="text-base font-bold text-[#002517]">AgriTech Carrier Fleet Standards</h3>
-              
+
               <div className="space-y-3">
                 <div className="p-4 rounded-2xl bg-[#F7F5EF] border border-[#E7DDC8] space-y-1">
                   <div className="flex items-center justify-between">

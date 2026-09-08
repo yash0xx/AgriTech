@@ -1,74 +1,69 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { UserRole, AppNotification } from '../../types';
 import { Logo } from '../brand/Logo';
-import { 
-  Search, 
-  Bell, 
-  Menu, 
-  X, 
-  ChevronDown, 
-  Sprout, 
-  ShoppingBag, 
-  ShieldCheck, 
-  User, 
-  LogOut, 
+import { useAuth } from '../../auth/useAuth';
+import {
+  Search,
+  Bell,
+  Menu,
+  X,
+  ChevronDown,
+  Sprout,
+  ShoppingBag,
+  ShieldCheck,
+  User,
+  LogOut,
   PlusCircle,
   Truck,
   TrendingUp,
   Store,
-  Layers,
   HelpCircle,
-  Info
+  Info,
+  Users
 } from 'lucide-react';
 
 interface HeaderProps {
-  currentView?: string;
-  onNavigate: (view: string, extra?: any) => void;
-  userRole?: UserRole;
-  activeRole?: UserRole;
-  onSwitchRole?: (role: UserRole) => void;
-  onRoleChange?: (role: UserRole) => void;
-  onOpenAuthModal: (initialRole?: UserRole, tab?: 'login' | 'register') => void;
+  onNavigate?: (view: string, extra?: any) => void;
   notifications?: AppNotification[];
   notificationsCount?: number;
-  onOpenNotifications: () => void;
+  onOpenNotifications?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  currentView = 'landing',
-  onNavigate,
-  userRole,
-  activeRole,
-  onSwitchRole,
-  onRoleChange,
-  onOpenAuthModal,
+  onNavigate: propNavigate,
   notifications = [],
   notificationsCount,
   onOpenNotifications,
 }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { profile, role, teamMember, signOut, isAuthenticated } = useAuth();
 
-  const effectiveRole: UserRole = activeRole || userRole || 'public';
-  const handleSwitch = (role: UserRole) => {
-    if (onRoleChange) onRoleChange(role);
-    else if (onSwitchRole) onSwitchRole(role);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+  const handleNav = (path: string) => {
+    navigate(path);
+    if (propNavigate) propNavigate(path);
   };
 
-  const unreadCount = notificationsCount !== undefined 
-    ? notificationsCount 
+  const unreadCount = notificationsCount !== undefined
+    ? notificationsCount
     : (notifications ? notifications.filter(n => !n.isRead).length : 0);
 
   const getRoleLabel = () => {
-    switch (effectiveRole) {
-      case 'farmer':
+    switch (role) {
+      case 'FARMER':
         return { label: 'Farmer Portal', icon: Sprout, color: 'text-[#0D6C45] bg-[#E6F0E8] border-[#9DF1C0]' };
-      case 'buyer':
+      case 'SELLER':
+        return { label: 'Seller Portal', icon: Store, color: 'text-indigo-800 bg-indigo-50 border-indigo-200' };
+      case 'BUYER':
         return { label: 'Buyer Portal', icon: ShoppingBag, color: 'text-[#C2962A] bg-[#FFF8E7] border-[#FFDF9E]' };
-      case 'admin':
+      case 'ADMIN':
         return { label: 'Admin Portal', icon: ShieldCheck, color: 'text-amber-800 bg-amber-50 border-amber-200' };
       default:
-        return { label: 'Public View', icon: Layers, color: 'text-[#151E19] bg-white border-[#E7DDC8]' };
+        return { label: 'AgriTech Portal', icon: Sprout, color: 'text-[#151E19] bg-white border-[#E7DDC8]' };
     }
   };
 
@@ -76,16 +71,24 @@ export const Header: React.FC<HeaderProps> = ({
   const CurrentRoleIcon = currentRoleInfo.icon;
 
   const navLinks = [
-    { id: 'marketplace', label: 'Marketplace', icon: Store },
-    { id: 'market-prices', label: 'Mandi Prices', badge: 'Live', icon: TrendingUp },
-    { id: 'logistics', label: 'AgriLogistics', icon: Truck },
-    { id: 'how-it-works', label: 'How It Works', icon: HelpCircle },
-    { id: 'about', label: 'About', icon: Info },
+    { path: '/marketplace', label: 'Marketplace', icon: Store },
+    { path: '/market-prices', label: 'Mandi Prices', badge: 'Live', icon: TrendingUp },
+    { path: '/logistics', label: 'AgriLogistics', icon: Truck },
+    { path: '/how-it-works', label: 'How It Works', icon: HelpCircle },
+    { path: '/about', label: 'About', icon: Info },
   ];
+
+  const getHomeRoute = () => {
+    if (role === 'FARMER') return '/farmer';
+    if (role === 'SELLER') return '/seller';
+    if (role === 'BUYER') return '/buyer';
+    if (role === 'ADMIN') return '/admin';
+    return '/login';
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-[#F7F5EF]/95 backdrop-blur-md border-b border-[#E7DDC8] transition-all">
-      {/* Top Banner (Optional status bar) */}
+      {/* Top Ticker Bar */}
       <div className="bg-[#002517] text-white text-[11px] py-1 px-4 text-center font-medium hidden sm:flex items-center justify-between">
         <div className="flex items-center gap-4 mx-auto">
           <span className="flex items-center gap-1.5">
@@ -104,33 +107,36 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Brand Logo */}
           <div className="flex items-center gap-6">
-            <Logo 
-              variant="desktop" 
-              onClick={() => onNavigate(effectiveRole === 'public' ? 'landing' : `${effectiveRole}-dashboard`)}
+            <Logo
+              variant="desktop"
+              onClick={() => handleNav(getHomeRoute())}
             />
 
             {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center gap-1 ml-4">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => onNavigate(link.id)}
-                  className={`relative px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
-                    currentView === link.id
-                      ? 'text-[#002517] bg-[#E6F0E8]'
-                      : 'text-[#525B54] hover:text-[#002517] hover:bg-[#E6F0E8]/50'
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    {link.label}
-                    {link.badge && (
-                      <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 bg-[#0D6C45] text-white rounded-full">
-                        {link.badge}
-                      </span>
-                    )}
-                  </span>
-                </button>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <button
+                    key={link.path}
+                    onClick={() => handleNav(link.path)}
+                    className={`relative px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? 'text-[#002517] bg-[#E6F0E8]'
+                        : 'text-[#525B54] hover:text-[#002517] hover:bg-[#E6F0E8]/50'
+                    }`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      {link.label}
+                      {link.badge && (
+                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 bg-[#0D6C45] text-white rounded-full">
+                          {link.badge}
+                        </span>
+                      )}
+                    </span>
+                  </button>
+                );
+              })}
             </nav>
           </div>
 
@@ -138,8 +144,8 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Search Trigger for Marketplace */}
             <button
-              onClick={() => onNavigate('marketplace')}
-              className="hidden md:flex items-center gap-2 bg-white border border-[#C1C8C2]/60 hover:border-[#0D6C45] px-3 py-1.5 rounded-xl text-xs text-[#717973] hover:text-[#002517] transition-all shadow-xs"
+              onClick={() => handleNav('/marketplace')}
+              className="hidden md:flex items-center gap-2 bg-white border border-[#C1C8C2]/60 hover:border-[#0D6C45] px-3 py-1.5 rounded-xl text-xs text-[#717973] hover:text-[#002517] transition-all shadow-xs cursor-pointer"
             >
               <Search className="w-3.5 h-3.5 text-[#0D6C45]" />
               <span>Search crops, mandis, farmers...</span>
@@ -147,158 +153,140 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {/* Notification Bell */}
-            <button
-              onClick={onOpenNotifications}
-              className="relative p-2.5 rounded-xl bg-white border border-[#E7DDC8] text-[#002517] hover:bg-[#E6F0E8] transition-colors shadow-xs"
-              aria-label="Open notifications"
-            >
-              <Bell className="w-4 h-4" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#0D6C45] border-2 border-white rounded-full animate-pulse" />
-              )}
-            </button>
-
-            {/* Role Switcher & Profile Dropdown */}
-            <div className="relative">
+            {onOpenNotifications && (
               <button
-                onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all shadow-xs ${currentRoleInfo.color}`}
+                onClick={onOpenNotifications}
+                className="relative p-2.5 rounded-xl bg-white border border-[#E7DDC8] text-[#002517] hover:bg-[#E6F0E8] transition-colors shadow-xs cursor-pointer"
+                aria-label="Open notifications"
               >
-                <CurrentRoleIcon className="w-4 h-4 shrink-0" />
-                <span className="hidden sm:inline">{currentRoleInfo.label}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#717973]" />
+                <Bell className="w-4 h-4" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#0D6C45] border-2 border-white rounded-full animate-pulse" />
+                )}
               </button>
+            )}
 
-              {roleDropdownOpen && (
-                <div 
-                  className="absolute right-0 mt-2 w-56 bg-[#F7F5EF] border border-[#E7DDC8] rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
-                  onMouseLeave={() => setRoleDropdownOpen(false)}
+            {/* User Profile & Account Dropdown */}
+            {isAuthenticated ? (
+              <div className="relative">
+                <button
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all shadow-xs cursor-pointer ${currentRoleInfo.color}`}
                 >
-                  <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#717973] border-b border-[#E7DDC8]">
-                    Switch Portal View
+                  <CurrentRoleIcon className="w-4 h-4 shrink-0" />
+                  <div className="text-left hidden sm:block">
+                    <span className="block font-bold leading-tight">{profile?.fullName || 'User'}</span>
+                    <span className="text-[10px] opacity-75 font-normal">{currentRoleInfo.label}</span>
                   </div>
+                  <ChevronDown className="w-3.5 h-3.5 text-[#717973]" />
+                </button>
 
-                  <div className="py-1 space-y-1">
-                    <button
-                      onClick={() => {
-                        handleSwitch('farmer');
-                        setRoleDropdownOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                        effectiveRole === 'farmer' ? 'bg-[#002517] text-white' : 'text-[#002517] hover:bg-[#E6F0E8]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Sprout className="w-4 h-4 text-[#0D6C45]" />
-                        <span>Farmer Portal</span>
-                      </div>
-                      {effectiveRole === 'farmer' && <span className="w-1.5 h-1.5 rounded-full bg-[#9DF1C0]" />}
-                    </button>
+                {userDropdownOpen && (
+                  <div
+                    className="absolute right-0 mt-2 w-60 bg-[#F7F5EF] border border-[#E7DDC8] rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                    onMouseLeave={() => setUserDropdownOpen(false)}
+                  >
+                    <div className="px-3 py-2 border-b border-[#E7DDC8]">
+                      <div className="text-xs font-bold text-[#002517]">{profile?.fullName}</div>
+                      <div className="text-[11px] text-[#717973] truncate">{profile?.phone || role}</div>
+                      {teamMember && (
+                        <div className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-semibold text-purple-700 bg-purple-100 px-2 py-0.5 rounded-md">
+                          <span>Team: {teamMember.teamRole}</span>
+                        </div>
+                      )}
+                    </div>
 
-                    <button
-                      onClick={() => {
-                        handleSwitch('buyer');
-                        setRoleDropdownOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                        effectiveRole === 'buyer' ? 'bg-[#002517] text-white' : 'text-[#002517] hover:bg-[#E6F0E8]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <ShoppingBag className="w-4 h-4 text-[#C2962A]" />
-                        <span>Buyer Portal</span>
-                      </div>
-                      {effectiveRole === 'buyer' && <span className="w-1.5 h-1.5 rounded-full bg-[#FFDF9E]" />}
-                    </button>
+                    <div className="py-1 space-y-1">
+                      <button
+                        onClick={() => {
+                          setUserDropdownOpen(false);
+                          handleNav(getHomeRoute());
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-[#002517] hover:bg-[#E6F0E8] transition-colors cursor-pointer"
+                      >
+                        <CurrentRoleIcon className="w-4 h-4 text-[#0D6C45]" />
+                        <span>My Dashboard</span>
+                      </button>
 
-                    <button
-                      onClick={() => {
-                        handleSwitch('admin');
-                        setRoleDropdownOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                        effectiveRole === 'admin' ? 'bg-[#002517] text-white' : 'text-[#002517] hover:bg-[#E6F0E8]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                        <span>Admin Portal</span>
-                      </div>
-                      {effectiveRole === 'admin' && <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />}
-                    </button>
+                      {role === 'ADMIN' && (
+                        <button
+                          onClick={() => {
+                            setUserDropdownOpen(false);
+                            handleNav('/admin/team');
+                          }}
+                          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-purple-900 hover:bg-purple-100 transition-colors cursor-pointer"
+                        >
+                          <Users className="w-4 h-4 text-purple-700" />
+                          <span>Team Management (6 Members)</span>
+                        </button>
+                      )}
+                    </div>
 
-                    <button
-                      onClick={() => {
-                        handleSwitch('public');
-                        setRoleDropdownOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                        effectiveRole === 'public' ? 'bg-[#002517] text-white' : 'text-[#525B54] hover:bg-[#E6F0E8]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Layers className="w-4 h-4 text-gray-500" />
-                        <span>Public Marketplace</span>
-                      </div>
-                      {effectiveRole === 'public' && <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />}
-                    </button>
+                    <div className="pt-2 border-t border-[#E7DDC8]">
+                      <button
+                        onClick={async () => {
+                          setUserDropdownOpen(false);
+                          await signOut();
+                          navigate('/login', { replace: true });
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-xl transition-colors cursor-pointer"
+                      >
+                        <LogOut className="w-3.5 h-3.5" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
                   </div>
-
-                  <div className="pt-2 border-t border-[#E7DDC8]">
-                    <button
-                      onClick={() => {
-                        setRoleDropdownOpen(false);
-                        onOpenAuthModal(effectiveRole === 'public' ? 'farmer' : effectiveRole, 'login');
-                      }}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#525B54] hover:text-[#002517] hover:bg-[#E6F0E8] rounded-xl transition-colors"
-                    >
-                      <User className="w-3.5 h-3.5" />
-                      <span>Account Settings</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Action CTA Button */}
-            {effectiveRole === 'farmer' ? (
+                )}
+              </div>
+            ) : (
               <button
-                onClick={() => onNavigate('farmer-add-crop')}
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm active:scale-98"
+                onClick={() => handleNav('/login')}
+                className="inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm cursor-pointer"
+              >
+                <User className="w-4 h-4 text-[#9DF1C0]" />
+                <span>Sign In</span>
+              </button>
+            )}
+
+            {/* Quick Action Button */}
+            {role === 'FARMER' ? (
+              <button
+                onClick={() => handleNav('/farmer/products/new')}
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm active:scale-98 cursor-pointer"
               >
                 <PlusCircle className="w-4 h-4 text-[#9DF1C0]" />
                 <span>List New Crop</span>
               </button>
-            ) : effectiveRole === 'buyer' ? (
+            ) : role === 'SELLER' ? (
               <button
-                onClick={() => onNavigate('marketplace')}
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm active:scale-98"
+                onClick={() => handleNav('/seller/products/new')}
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm active:scale-98 cursor-pointer"
+              >
+                <PlusCircle className="w-4 h-4 text-indigo-300" />
+                <span>List Produce</span>
+              </button>
+            ) : role === 'BUYER' ? (
+              <button
+                onClick={() => handleNav('/marketplace')}
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm active:scale-98 cursor-pointer"
               >
                 <ShoppingBag className="w-4 h-4 text-[#FFDF9E]" />
                 <span>Browse Produce</span>
               </button>
-            ) : effectiveRole === 'admin' ? (
+            ) : role === 'ADMIN' ? (
               <button
-                onClick={() => onNavigate('admin-dashboard')}
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm"
+                onClick={() => handleNav('/admin/team')}
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm cursor-pointer"
               >
-                <ShieldCheck className="w-4 h-4 text-amber-400" />
-                <span>Command Center</span>
+                <Users className="w-4 h-4 text-purple-400" />
+                <span>Manage Team</span>
               </button>
-            ) : (
-              <button
-                onClick={() => onOpenAuthModal('farmer', 'register')}
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#002517] hover:bg-[#123B2A] text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm active:scale-98"
-              >
-                <Sprout className="w-4 h-4 text-[#9DF1C0]" />
-                <span>Start Selling</span>
-              </button>
-            )}
+            ) : null}
 
             {/* Mobile Menu Toggle Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-[#002517] hover:bg-[#E6F0E8] transition-colors"
+              className="lg:hidden p-2 rounded-xl text-[#002517] hover:bg-[#E6F0E8] transition-colors cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -318,7 +306,7 @@ export const Header: React.FC<HeaderProps> = ({
               placeholder="Search crops, mandis, farmers..."
               onFocus={() => {
                 setMobileMenuOpen(false);
-                onNavigate('marketplace');
+                handleNav('/marketplace');
               }}
               className="w-full bg-[#F7F5EF] border border-[#C1C8C2] rounded-xl pl-10 pr-4 py-2 text-xs text-[#002517] focus:outline-none"
             />
@@ -327,13 +315,13 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="space-y-1">
             {navLinks.map((link) => (
               <button
-                key={link.id}
+                key={link.path}
                 onClick={() => {
-                  onNavigate(link.id);
+                  handleNav(link.path);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold ${
-                  currentView === link.id
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold cursor-pointer ${
+                  location.pathname === link.path
                     ? 'bg-[#E6F0E8] text-[#002517]'
                     : 'text-[#525B54] hover:bg-[#F7F5EF]'
                 }`}
@@ -352,28 +340,31 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Quick CTAs for Mobile Menu */}
-          <div className="pt-3 border-t border-[#E7DDC8] grid grid-cols-2 gap-2">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAuthModal('farmer', 'login');
-              }}
-              className="bg-[#E6F0E8] text-[#002517] text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5"
-            >
-              <Sprout className="w-4 h-4 text-[#0D6C45]" />
-              <span>Farmer Login</span>
-            </button>
-
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAuthModal('buyer', 'login');
-              }}
-              className="bg-[#FFF8E7] text-[#C2962A] text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5"
-            >
-              <ShoppingBag className="w-4 h-4 text-[#C2962A]" />
-              <span>Buyer Login</span>
-            </button>
+          <div className="pt-3 border-t border-[#E7DDC8]">
+            {isAuthenticated ? (
+              <button
+                onClick={async () => {
+                  setMobileMenuOpen(false);
+                  await signOut();
+                  navigate('/login', { replace: true });
+                }}
+                className="w-full bg-red-50 text-red-700 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out ({profile?.fullName})</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleNav('/login');
+                }}
+                className="w-full bg-[#002517] text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <User className="w-4 h-4 text-[#9DF1C0]" />
+                <span>Sign In to Dashboard</span>
+              </button>
+            )}
           </div>
         </div>
       )}

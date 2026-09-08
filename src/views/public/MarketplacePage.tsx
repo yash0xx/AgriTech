@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import { ProductListing, CropCategory, UserRole } from '../../types';
-import { 
-  Search, 
-  Filter, 
-  SlidersHorizontal, 
-  MapPin, 
-  BadgeCheck, 
-  Star, 
-  ArrowUpDown, 
-  Heart, 
-  Check, 
-  X, 
+import {
+  Search,
+  Filter,
+  SlidersHorizontal,
+  MapPin,
+  BadgeCheck,
+  Star,
+  ArrowUpDown,
+  Heart,
+  Check,
+  X,
   ArrowRight,
   Sparkles,
   ShoppingBag,
@@ -23,7 +23,6 @@ interface MarketplacePageProps {
   initialCategory?: string;
   initialQuery?: string;
   onNavigate: (view: string, extra?: any) => void;
-  onOpenAuthModal: (role?: UserRole) => void;
   onQuickRequestCrop?: (product: ProductListing) => void;
 }
 
@@ -32,7 +31,6 @@ export const MarketplacePage: React.FC<MarketplacePageProps> = ({
   initialCategory,
   initialQuery = '',
   onNavigate,
-  onOpenAuthModal,
   onQuickRequestCrop,
 }) => {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
@@ -60,7 +58,7 @@ export const MarketplacePage: React.FC<MarketplacePageProps> = ({
   const filteredProducts = useMemo(() => {
     return products.filter((prod) => {
       // Query match
-      const queryMatch = 
+      const queryMatch =
         prod.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prod.cropName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prod.farmer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -92,7 +90,7 @@ export const MarketplacePage: React.FC<MarketplacePageProps> = ({
 
   return (
     <div className="min-h-screen bg-[#F7F5EF] pb-20">
-      
+
       {/* Header Banner */}
       <div className="bg-[#002517] text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-[#123B2A]">
         <div className="max-w-7xl mx-auto">
@@ -124,7 +122,7 @@ export const MarketplacePage: React.FC<MarketplacePageProps> = ({
 
       {/* Main Filter & Products Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        
+
         {/* Top Controls Strip: Search, Categories & Sort */}
         <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E7DDC8] shadow-xs mb-6 space-y-3">
           <div className="flex flex-col sm:flex-row items-center gap-3">
@@ -193,7 +191,7 @@ export const MarketplacePage: React.FC<MarketplacePageProps> = ({
 
         {/* Layout Grid (Sidebar + Product Cards) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* DESKTOP FILTER SIDEBAR */}
           <aside className="hidden lg:block lg:col-span-3 space-y-5">
             <div className="bg-white p-5 rounded-3xl border border-[#E7DDC8] shadow-xs space-y-6">
@@ -333,7 +331,7 @@ export const MarketplacePage: React.FC<MarketplacePageProps> = ({
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        
+
                         {/* Top Badges */}
                         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                           <span className="bg-[#002517]/85 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full">

@@ -64,6 +64,7 @@ const REQUIRED_MIGRATIONS = [
   '026_idempotency_records.sql',
   '027_storage_policies.sql',
   '028_add_seller_role.sql',
+  '029_security_advisor_view_hardening.sql',
 ];
 
 function validateMigrations() {

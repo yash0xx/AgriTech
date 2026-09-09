@@ -167,6 +167,8 @@ async function provisionTeam() {
       .upsert(
         {
           user_id: userId,
+          email: email.toLowerCase(),
+          display_name: name,
           team_role: config.teamRole,
           assigned_by: adminLeadId || userId,
           assigned_at: new Date().toISOString(),

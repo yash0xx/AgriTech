@@ -4,7 +4,7 @@ import { logger } from './utils/logger';
 
 dotenv.config();
 
-const port = process.env.PORT || process.env.BACKEND_PORT || 5001;
+const port = process.env.BACKEND_PORT || (process.env.NODE_ENV === 'production' && process.env.PORT ? process.env.PORT : 5001);
 const app = createApp();
 
 app.listen(port, () => {

@@ -9,7 +9,12 @@
     "preview": "vite preview",
     "start": "tsx backend/src/server.ts",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "verify": "tsx scripts/verify-all.ts",
+    "test:security": "tsx scripts/run-security-audit.ts",
+    "test:api": "tsx scripts/test-backend-api.ts",
+    "test:staging": "tsx scripts/test-staging-acceptance.ts",
+    "provision": "tsx scripts/provision-team.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

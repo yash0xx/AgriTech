@@ -104,9 +104,9 @@ async function runRealTeamAccountValidation() {
   // 6. Prajwal Khomane
   console.log('\n--- Checking Member 6: Prajwal Khomane ---');
   assert(
-    'Prajwal Khomane configured with exact email: Prajwal.khomane.aids.25@vppkbiet.org',
-    teamPage.includes('Prajwal.khomane.aids.25@vppkbiet.org') &&
-    provisionScript.includes('Prajwal.khomane.aids.25@vppkbiet.org')
+    'Prajwal Khomane configured with exact email: prajwal.khomane.aids.25@vpkbiet.org',
+    teamPage.includes('prajwal.khomane.aids.25@vpkbiet.org') &&
+    provisionScript.includes('prajwal.khomane.aids.25@vpkbiet.org')
   );
   assert(
     'Prajwal Khomane mapped to Platform Role: BUYER and Team Role: QA',

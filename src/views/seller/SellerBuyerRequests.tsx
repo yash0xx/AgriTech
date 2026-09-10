@@ -6,7 +6,6 @@ import {
   CheckCircle2,
   XCircle,
   Search,
-  Clock,
   MessageSquare,
   DollarSign
 } from 'lucide-react';

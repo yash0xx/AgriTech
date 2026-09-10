@@ -1,16 +1,10 @@
 import React from 'react';
-import { UserRole } from '../../types';
 import {
   Sprout,
   ShoppingBag,
-  ShieldCheck,
-  CheckCircle2,
   Truck,
-  Scale,
-  CreditCard,
   ArrowRight,
   FileCheck,
-  Building2,
   Lock,
   BadgePercent
 } from 'lucide-react';

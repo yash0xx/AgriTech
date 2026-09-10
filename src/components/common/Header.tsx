@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { UserRole, AppNotification } from '../../types';
+import { AppNotification } from '../../types';
 import { Logo } from '../brand/Logo';
 import { useAuth } from '../../auth/useAuth';
 import {
@@ -20,8 +20,10 @@ import {
   Store,
   HelpCircle,
   Info,
-  Users
+  Users,
+  KeyRound
 } from 'lucide-react';
+import { ChangePasswordModal } from './ChangePasswordModal';
 
 interface HeaderProps {
   onNavigate?: (view: string, extra?: any) => void;
@@ -42,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
 
   const handleNav = (path: string) => {
     navigate(path);
@@ -220,6 +223,17 @@ export const Header: React.FC<HeaderProps> = ({
                           <span>Team Management (6 Members)</span>
                         </button>
                       )}
+
+                      <button
+                        onClick={() => {
+                          setUserDropdownOpen(false);
+                          setChangePasswordOpen(true);
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-[#002517] hover:bg-[#E6F0E8] transition-colors cursor-pointer"
+                      >
+                        <KeyRound className="w-4 h-4 text-[#0D6C45]" />
+                        <span>Change Password</span>
+                      </button>
                     </div>
 
                     <div className="pt-2 border-t border-[#E7DDC8]">
@@ -342,17 +356,29 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Quick CTAs for Mobile Menu */}
           <div className="pt-3 border-t border-[#E7DDC8]">
             {isAuthenticated ? (
-              <button
-                onClick={async () => {
-                  setMobileMenuOpen(false);
-                  await signOut();
-                  navigate('/login', { replace: true });
-                }}
-                className="w-full bg-red-50 text-red-700 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Sign Out ({profile?.fullName})</span>
-              </button>
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setChangePasswordOpen(true);
+                  }}
+                  className="w-full bg-[#E6F0E8] text-[#002517] text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer hover:bg-[#d8e6db] transition-colors"
+                >
+                  <KeyRound className="w-4 h-4 text-[#0D6C45]" />
+                  <span>Change Password</span>
+                </button>
+                <button
+                  onClick={async () => {
+                    setMobileMenuOpen(false);
+                    await signOut();
+                    navigate('/login', { replace: true });
+                  }}
+                  className="w-full bg-red-50 text-red-700 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out ({profile?.fullName})</span>
+                </button>
+              </div>
             ) : (
               <button
                 onClick={() => {
@@ -368,6 +394,12 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
       )}
+
+      {/* Change Password Modal */}
+      <ChangePasswordModal
+        isOpen={changePasswordOpen}
+        onClose={() => setChangePasswordOpen(false)}
+      />
     </header>
   );
 };

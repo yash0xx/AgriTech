@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
-import { MandiMarketPrice, CropCategory } from '../../types';
+import { MandiMarketPrice } from '../../types';
 import { AIInsightCard } from '../../components/common/AIInsightCard';
 import { 
   TrendingUp, 
   TrendingDown, 
   Search, 
-  MapPin, 
-  Sparkles, 
-  RefreshCw, 
   Filter, 
   ArrowUpRight, 
-  ShieldCheck, 
-  Clock, 
-  Building2,
-  HelpCircle
+  ShieldCheck
 } from 'lucide-react';
 
 interface MarketPricesPageProps {

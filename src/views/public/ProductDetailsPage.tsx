@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ProductListing, UserRole, LogisticsQuote } from '../../types';
+import { ProductListing, LogisticsQuote } from '../../types';
 import { AIInsightCard } from '../../components/common/AIInsightCard';
 
 const VERIFIED_REVIEWS = [
@@ -62,19 +62,11 @@ import {
   Star,
   ShieldCheck,
   Truck,
-  Calendar,
-  Clock,
   Phone,
   MessageSquare,
-  Share2,
   Heart,
-  Sparkles,
-  AlertCircle,
-  CheckCircle2,
   Plus,
   Minus,
-  TrendingUp,
-  Info,
   Scale
 } from 'lucide-react';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, ArrowRight, TrendingUp, AlertCircle, RefreshCw } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 
 interface AIInsightCardProps {
   title?: string;

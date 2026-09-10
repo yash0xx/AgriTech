@@ -41,7 +41,7 @@ async function runReleaseValidation() {
     { email: 'yashlokhande082@gmail.com', role: 'SELLER', teamRole: 'FRONTEND', name: 'Yash Lokhande' },
     { email: 'shravani2.bhosale.comp.25@vpkbiet.org', role: 'FARMER', teamRole: 'DATABASE', name: 'Shravani Bhosale' },
     { email: 'anuj.deshpande.comp.25@vpkbiet.org', role: 'BUYER', teamRole: 'AI_ML', name: 'Anuj Deshpande' },
-    { email: 'Prajwal.khomane.aids.25@vppkbiet.org', role: 'BUYER', teamRole: 'QA', name: 'Prajwal Khomane' },
+    { email: 'prajwal.khomane.aids.25@vpkbiet.org', role: 'BUYER', teamRole: 'QA', name: 'Prajwal Khomane' },
   ];
 
   for (const member of teamRoster) {

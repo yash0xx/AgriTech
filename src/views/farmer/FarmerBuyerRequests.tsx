@@ -6,11 +6,7 @@ import {
   XCircle, 
   Scale, 
   Search, 
-  MapPin, 
-  Building2, 
-  Clock, 
-  MessageSquare,
-  DollarSign
+  MessageSquare
 } from 'lucide-react';
 
 interface FarmerBuyerRequestsProps {

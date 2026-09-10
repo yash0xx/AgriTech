@@ -93,7 +93,7 @@ async function runWorkflowMatrix() {
   assert(
     'Prajwal Khomane mapped to BUYER / QA',
     teamPageContent.includes('Prajwal Khomane') &&
-    teamPageContent.includes('Prajwal.khomane.aids.25@vppkbiet.org') &&
+    teamPageContent.includes('prajwal.khomane.aids.25@vpkbiet.org') &&
     teamPageContent.includes('QA')
   );
 

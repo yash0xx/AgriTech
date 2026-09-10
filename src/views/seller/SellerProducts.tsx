@@ -10,7 +10,6 @@ import {
   PauseCircle,
   PlayCircle,
   MapPin,
-  Store,
   Package
 } from 'lucide-react';
 

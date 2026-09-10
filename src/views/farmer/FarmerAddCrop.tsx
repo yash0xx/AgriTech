@@ -4,13 +4,7 @@ import {
   ArrowLeft, 
   Sprout, 
   Sparkles, 
-  Upload, 
-  CheckCircle2, 
-  Info, 
-  Image as ImageIcon, 
-  MapPin, 
-  Calendar,
-  AlertCircle
+  CheckCircle2
 } from 'lucide-react';
 
 interface FarmerAddCropProps {

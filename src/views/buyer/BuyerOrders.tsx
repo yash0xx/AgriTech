@@ -4,14 +4,7 @@ import {
   ArrowLeft, 
   Search, 
   ShieldCheck, 
-  Truck, 
-  CheckCircle2, 
-  Clock, 
-  MapPin, 
-  Download,
-  Calendar,
-  Store,
-  Star
+  Store
 } from 'lucide-react';
 
 interface BuyerOrdersProps {

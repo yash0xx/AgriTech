@@ -25,7 +25,7 @@ const TEAM_MEMBERS = [
   { name: 'Yash Lokhande', email: 'yashlokhande082@gmail.com', expectedRole: 'SELLER', teamRole: 'FRONTEND', dashboard: '/seller' },
   { name: 'Shravani Bhosale', email: 'shravani2.bhosale.comp.25@vpkbiet.org', expectedRole: 'FARMER', teamRole: 'DATABASE', dashboard: '/farmer' },
   { name: 'Anuj Deshpande', email: 'anuj.deshpande.comp.25@vpkbiet.org', expectedRole: 'BUYER', teamRole: 'AI_ML', dashboard: '/buyer' },
-  { name: 'Prajwal Khomane', email: 'Prajwal.khomane.aids.25@vppkbiet.org', expectedRole: 'BUYER', teamRole: 'QA', dashboard: '/buyer' },
+  { name: 'Prajwal Khomane', email: 'prajwal.khomane.aids.25@vpkbiet.org', expectedRole: 'BUYER', teamRole: 'QA', dashboard: '/buyer' },
 ];
 
 let totalPassed = 0;

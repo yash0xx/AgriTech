@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
-import { ProductListing, OrderItem, MandiMarketPrice, AdminEscrowLedger, UserRole } from '../../types';
+import { ProductListing, OrderItem, MandiMarketPrice, AdminEscrowLedger } from '../../types';
 import { 
   ShieldCheck, 
-  Users, 
-  DollarSign, 
   TrendingUp, 
-  AlertTriangle, 
   CheckCircle2, 
   XCircle, 
-  Scale, 
-  Activity, 
-  Building2, 
-  Lock, 
-  ArrowUpRight,
-  RefreshCw,
-  Search,
-  Sliders,
   FileCheck
 } from 'lucide-react';
 

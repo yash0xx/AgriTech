@@ -86,7 +86,7 @@ const TEAM_CONFIGS: TeamMemberConfig[] = [
     envKey: 'TEAM_MEMBER_6_EMAIL',
     nameKey: 'TEAM_MEMBER_6_NAME',
     passKey: 'TEAM_MEMBER_6_PASSWORD',
-    defaultEmail: 'Prajwal.khomane.aids.25@vppkbiet.org',
+    defaultEmail: 'prajwal.khomane.aids.25@vpkbiet.org',
     defaultName: 'Prajwal Khomane',
     platformRole: 'BUYER',
     teamRole: 'QA',

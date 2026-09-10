@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../auth/useAuth';
 import { authService } from '../../auth/authService';
-import { TeamMember, TeamRole, PlatformRole } from '../../types';
+import { TeamRole, PlatformRole } from '../../types';
 import {
   Users,
   Shield,
@@ -123,7 +123,7 @@ const CONFIRMED_TEAM_ROSTER: TeamMemberDisplay[] = [
   {
     id: 'team-6',
     fullName: 'Prajwal Khomane',
-    email: 'Prajwal.khomane.aids.25@vppkbiet.org',
+    email: 'prajwal.khomane.aids.25@vpkbiet.org',
     platformRole: 'BUYER',
     teamRole: 'QA',
     accountStatus: 'ACTIVE',

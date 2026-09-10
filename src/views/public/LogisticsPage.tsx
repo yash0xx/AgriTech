@@ -2,17 +2,7 @@ import React, { useState } from 'react';
 import {
   Truck,
   MapPin,
-  Calendar,
-  Clock,
-  ShieldCheck,
-  ArrowRight,
-  Sparkles,
-  CheckCircle2,
-  Scale,
-  HelpCircle,
-  Phone,
-  Layers,
-  ChevronRight
+  CheckCircle2
 } from 'lucide-react';
 
 const FLEET_VEHICLE_OPTIONS = [

@@ -3,12 +3,7 @@ import { ProductListing, CropCategory, CropUnit } from '../../types';
 import {
   ArrowLeft,
   Store,
-  Sparkles,
-  Upload,
-  CheckCircle2,
-  MapPin,
-  Calendar,
-  AlertCircle
+  CheckCircle2
 } from 'lucide-react';
 
 interface SellerAddProductProps {

@@ -2,18 +2,11 @@ import React from 'react';
 import { ProductListing, BuyerRequest, OrderItem, MandiMarketPrice } from '../../types';
 import { AIInsightCard } from '../../components/common/AIInsightCard';
 import { 
-  ShoppingBag, 
   Store, 
   Truck, 
   ShieldCheck, 
-  TrendingUp, 
-  PlusCircle, 
-  ArrowRight, 
-  Clock, 
   BadgeCheck, 
-  CheckCircle2, 
-  MapPin, 
-  AlertCircle
+  CheckCircle2
 } from 'lucide-react';
 
 interface BuyerDashboardProps {

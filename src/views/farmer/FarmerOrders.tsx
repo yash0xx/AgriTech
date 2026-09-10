@@ -3,14 +3,7 @@ import { OrderItem } from '../../types';
 import { 
   ArrowLeft, 
   Search, 
-  ShieldCheck, 
-  Truck, 
-  CheckCircle2, 
-  Clock, 
-  MapPin, 
-  Download,
-  Calendar,
-  Eye
+  ShieldCheck
 } from 'lucide-react';
 
 interface FarmerOrdersProps {

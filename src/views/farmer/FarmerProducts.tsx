@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
-import { ProductListing, CropCategory } from '../../types';
+import { ProductListing } from '../../types';
 import { 
   ArrowLeft, 
   PlusCircle, 
   Search, 
-  Edit3, 
   Trash2, 
   Eye, 
-  MoreVertical, 
-  CheckCircle2, 
   PauseCircle, 
-  PlayCircle,
-  MapPin,
-  TrendingUp
+  PlayCircle
 } from 'lucide-react';
 
 interface FarmerProductsProps {

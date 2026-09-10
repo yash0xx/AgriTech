@@ -1,21 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { ProductListing, CropCategory, UserRole } from '../../types';
+import { ProductListing } from '../../types';
 import {
   Search,
   Filter,
   SlidersHorizontal,
   MapPin,
   BadgeCheck,
-  Star,
-  ArrowUpDown,
   Heart,
-  Check,
   X,
   ArrowRight,
   Sparkles,
-  ShoppingBag,
-  Store,
-  Tag
+  Store
 } from 'lucide-react';
 
 interface MarketplacePageProps {

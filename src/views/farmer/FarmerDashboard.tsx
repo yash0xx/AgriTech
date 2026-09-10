@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
-import { ProductListing, BuyerRequest, OrderItem, MandiMarketPrice, UserRole } from '../../types';
+import { ProductListing, BuyerRequest, OrderItem, MandiMarketPrice } from '../../types';
 import { AIInsightCard } from '../../components/common/AIInsightCard';
 import { useAuth } from '../../auth/useAuth';
 import {
-  Sprout,
   PlusCircle,
-  ShoppingBag,
   TrendingUp,
   Truck,
-  Clock,
   CheckCircle2,
   XCircle,
   Scale,
-  ArrowRight,
-  ArrowUpRight,
-  DollarSign,
-  Package,
-  Eye,
-  BadgeCheck,
-  MessageSquare,
-  AlertCircle,
-  Calendar
+  BadgeCheck
 } from 'lucide-react';
 
 interface FarmerDashboardProps {

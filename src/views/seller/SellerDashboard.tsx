@@ -10,10 +10,8 @@ import {
   CheckCircle2,
   XCircle,
   ArrowRight,
-  ArrowUpRight,
   Package,
   MessageSquare,
-  AlertCircle,
   Truck,
   Building
 } from 'lucide-react';

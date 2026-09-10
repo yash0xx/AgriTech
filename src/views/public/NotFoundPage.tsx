@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sprout, ArrowRight, Store, Home } from 'lucide-react';
+import { Sprout, Store, Home } from 'lucide-react';
 
 interface NotFoundPageProps {
   onNavigate: (view: string) => void;

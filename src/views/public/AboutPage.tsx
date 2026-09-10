@@ -1,16 +1,6 @@
 import React from 'react';
 import { Logo } from '../../components/brand/Logo';
-import {
-  Sprout,
-  MapPin,
-  Users,
-  Award,
-  TrendingUp,
-  ShieldCheck,
-  ArrowRight,
-  Sparkles,
-  Building2
-} from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 interface AboutPageProps {
   onNavigate: (view: string) => void;

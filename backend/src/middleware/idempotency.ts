@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import { supabaseAdmin, supabasePublic } from '../config/supabase';
 

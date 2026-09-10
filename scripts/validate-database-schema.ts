@@ -65,6 +65,7 @@ const REQUIRED_MIGRATIONS = [
   '027_storage_policies.sql',
   '028_add_seller_role.sql',
   '029_security_advisor_view_hardening.sql',
+  '030_security_advisor_warning_hardening.sql',
 ];
 
 function validateMigrations() {

@@ -17,10 +17,16 @@ export function createApp(): Express {
 
   // Production-Ready CORS Middleware (Section 21)
   const isProd = process.env.NODE_ENV === 'production';
-  const defaultDevOrigins = ['http://localhost:3050', 'http://localhost:3000', 'http://127.0.0.1:3050'];
-  const allowedOrigins = process.env.ALLOWED_ORIGINS
+  const defaultOrigins = [
+    'https://agri-tech-five.vercel.app',
+    'http://localhost:3050',
+    'http://localhost:3000',
+    'http://127.0.0.1:3050',
+  ];
+  const configuredOrigins = process.env.ALLOWED_ORIGINS
     ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim())
-    : defaultDevOrigins;
+    : [];
+  const allowedOrigins = Array.from(new Set([...defaultOrigins, ...configuredOrigins]));
 
   app.use((req, res, next) => {
     const origin = req.headers.origin as string;

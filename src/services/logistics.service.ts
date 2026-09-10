@@ -71,7 +71,8 @@ export const logisticsService = {
    */
   async getQuote(params: LogisticsQuoteRequest): Promise<LogisticsQuoteResponse> {
     try {
-      const response = await fetch('/api/logistics/quote', {
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+      const response = await fetch(`${apiBase}/logistics/quote`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(params),
@@ -136,7 +137,8 @@ export const logisticsService = {
 
     // Try backend trusted booking endpoint
     try {
-      const res = await fetch('/api/logistics/book', {
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+      const res = await fetch(`${apiBase}/logistics/book`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

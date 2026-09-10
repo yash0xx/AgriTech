@@ -282,7 +282,8 @@ export const ordersService = {
 
     // Attempt backend trusted creation
     try {
-      const response = await fetch('/api/orders/create', {
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+      const response = await fetch(`${apiBase}/orders/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

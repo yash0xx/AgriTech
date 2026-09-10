@@ -83,9 +83,9 @@ async function runReleaseValidation() {
   console.log('\n--- 3. Database Migration Sequence & Safety Audit ---');
   const migrationsDir = path.join(process.cwd(), 'supabase', 'migrations');
   const migrationFiles = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
-  assert(`Found all 29 required sequential migrations (001 to 029)`, migrationFiles.length === 29);
+  assert(`Found all 30 required sequential migrations (001 to 030)`, migrationFiles.length === 30);
   assert('First migration is 001_extensions.sql', migrationFiles[0] === '001_extensions.sql');
-  assert('Latest migration is 029_security_advisor_view_hardening.sql', migrationFiles[28] === '029_security_advisor_view_hardening.sql');
+  assert('Latest migration is 030_security_advisor_warning_hardening.sql', migrationFiles[29] === '030_security_advisor_warning_hardening.sql');
 
   let hasDestructiveSql = false;
   for (const file of migrationFiles) {

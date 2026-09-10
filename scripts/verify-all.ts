@@ -30,6 +30,7 @@ const SUITES = [
   { name: 'Final Go-Live Audit Suite', command: 'npx tsx scripts/test-golive-audit.ts' },
   { name: 'Final Release & Go-Live Validation', command: 'npx tsx scripts/test-release-final-validation.ts' },
   { name: 'Repository-Wide Security Audit', command: 'npx tsx scripts/run-security-audit.ts' },
+  { name: 'Direct RPC & Advisor Remediation Security Suite', command: 'npx tsx scripts/test-direct-security-rpc.ts' },
   { name: 'TypeScript Static Type Checking', command: 'npx tsc --noEmit' },
   { name: 'Production Application Build', command: 'npm run build' },
 ];
